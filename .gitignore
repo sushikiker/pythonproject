@@ -1,4 +1,65 @@
-.env
-venv/
-__pycache__/
-alembic/versions
+# IDE specific files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Python related
+*.py[cod]
+*$py.class
+*.so
+.Python
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Logs
+*.log
+logs/
+
+# Databases
+*.db
+*.sqlite3
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Environment
+.env.*
+.venv
+env/
+ENV/
+
+# Temporary files
+tmp/
+.tmp/
+.cache/
+
+# Documentation
+docs/_build/
+site/
+
+# Other
+.mypy_cache/
