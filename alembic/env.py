@@ -7,8 +7,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
 
-from infrastructure.config import settings_db
-from infrastructure.database import async_engine
+from src.infrastructure.config import settings_db
+from src.infrastructure.database import async_engine
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -23,7 +23,16 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from infrastructure.models import Base
+from src.infrastructure.db.models.models import Base  # Импортируем Base
+from src.infrastructure.db.models.model_hall import Hall
+from src.infrastructure.db.models.model_movie import Movie
+from src.infrastructure.db.models.model_seance import Seance
+from src.infrastructure.db.models.model_seat import Seat
+from src.infrastructure.db.models.model_user import User
+from src.infrastructure.db.models.model_roles import Roles
+
+
+
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,
