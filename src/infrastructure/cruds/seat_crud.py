@@ -1,6 +1,6 @@
 from src.infrastructure.db.models import Seat
 from src.infrastructure.database import session_fabric
-from sqlalchemy import select, delete, update
+from sqlalchemy import select, delete, update, and_
 from sqlalchemy.exc import IntegrityError
 from typing import Optional
 import asyncio
@@ -13,11 +13,15 @@ class SeatCRUD:
             result = await session.execute(query)
             return result.scalar_one_or_none()
     
-    async def select_free_seats(self):
-        async with session_fabric() as session:
-            query = select(Seat).where(Seat.status == False)
-            result = await session.execute(query)
-            return result.scalars().all()
+    async def select_free_seats(self, hall_id):
+        try:
+            async with session_fabric() as session:
+                query = select(Seat).where(and_(Seat.status == False, Seat.hall_id == hall_id))
+                result = await session.execute(query)
+                return result.scalars().all()
+        except IntegrityError:
+            await session.rollback()
+            return 'hall'
     
     async def delete_seat(self,id:int):
         async with session_fabric() as session:
