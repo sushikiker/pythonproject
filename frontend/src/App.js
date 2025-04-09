@@ -5,83 +5,69 @@ import Aside from "./components/Aside";
 import EditProfile from "./components/EditProfile";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
-import DiscountPage from "./components/DiscountPage";
+
 import CartPage from "./components/CartPage";
 import ProfilePage from "./components/ProfilePage";
 import AuthPage from "./components/Authpage";
 class App extends React.Component {
   state = {
-    products: [],
+    products: [ {
+      id: 1,
+      title: "Inception",
+      genre: "Sci-Fi",
+      director: "Christopher Nolan",
+      year: 2010,
+      rating: 8.8,
+      description: "A skilled thief leads a team into people's dreams to steal secrets.",
+      price: 9.99,
+      image: "https://www.quirkybyte.com/wp-content/uploads/2018/08/Inception-5.jpg"
+    },
+    {
+      id: 2,
+      title: "The Godfather",
+      genre: "Crime",
+      director: "Francis Ford Coppola",
+      year: 1972,
+      rating: 9.2,
+      description: "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+      price: 12.99,
+      image: "https://example.com/images/godfather.jpg"
+    },
+    {
+      id: 3,
+      title: "Interstellar",
+      genre: "Adventure",
+      director: "Christopher Nolan",
+      year: 2014,
+      rating: 8.6,
+      description: "A team of explorers travel through a wormhole in space in an attempt to save humanity.",
+      price: 10.99,
+      image: "https://example.com/images/interstellar.jpg"
+    },
+    {
+      id: 4,
+      title: "Parasite",
+      genre: "Thriller",
+      director: "Bong Joon-ho",
+      year: 2019,
+      rating: 8.6,
+      description: "A poor family schemes to become employed by a wealthy household by posing as unrelated individuals.",
+      price: 8.99,
+      image: "https://example.com/images/parasite.jpg"
+    }],
     currentView: "all", // Возможные значения: "all", "discounts", "bucet", "profile"
     user: null, // Данные пользователя
     isLoadingUser: false, // Флаг загрузки профиля
   };
 
-  componentDidMount() {
-    // Загружаем товары
-    axios.get("http://127.0.0.1:8080/api/products/")
-      .then(response => {
-        this.setState({ products: response.data });
-      })
-      .catch(error => {
-        console.error("Ошибка при загрузке данных:", error);
-      });
+ 
   
-    // Загружаем пользователя из куки
-    this.loadUserFromCookies();
-  }
 
   toggleView = (view) => {
     this.setState({ currentView: view });
-  };
-  fetchUserData = async (email, password) => {
-    this.setState({ isLoadingUser: true });
-
-    try {
-      const response = await fetch("http://127.0.0.1:8080/api/login/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await response.json();
-      console.log("Введенные данные:", { email, password }); // Лог введенных данных
-      console.log("Ответ от сервера:", data); // Вывод в консоль
-
-      if (!response.ok) {
-        throw new Error(data.error || "Ошибка загрузки профиля");
-      }
-
-      // Сохранение данных в куки
-      document.cookie = `userEmail=${data.user.email}; path=/; Secure; SameSite=Strict`;
-      document.cookie = `userName=${data.user.name}; path=/; Secure; SameSite=Strict`;
-      if (data.token) {
-        document.cookie = `authToken=${data.token}; path=/; Secure; SameSite=Strict`;
-      }
-
-      this.setState({ user: data.user, isLoadingUser: false });
-    } catch (error) {
-      console.error("Ошибка:", error);
-      this.setState({ user: null, isLoadingUser: false });
-    }
-  };
+  }
 
 
-  loadUserFromCookies = () => {
-    const getCookie = (name) => {
-      const match = document.cookie.match(new RegExp(`(^| )${name}=([^;]+)`));
-      return match ? match[2] : null;
-    };
-
-    const email = getCookie("userEmail");
-    const name = getCookie("userName");
-
-    if (email && name) {
-      this.setState({ user: { email, name } });
-    }
-  };
 
  
 
@@ -95,8 +81,7 @@ class App extends React.Component {
     }
 
     switch (currentView) {
-      case "discounts":
-        return <DiscountPage products={products} />;
+     
       case "bucet":
         return <CartPage />;
       case "EditProfile":

@@ -3,6 +3,34 @@
   padding: 0;
   box-sizing: border-box;
 }
+.seat-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr); /* 10 столбцов */
+  gap: 5px; /* Уменьшаем отступы между кнопками */
+  justify-items: center; /* Центрируем кнопки в ячейках */
+}
+
+
+.seat-button {
+  width: 20px; /* Уменьшаем ширину кнопки */
+  height: 30px; /* Уменьшаем высоту кнопки */
+  font-size: 12px; /* Меньший шрифт для текста */
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.seat-button.disabled {
+  background-color: #dcdcdc;
+  cursor: not-allowed;
+}
+
+.seat-button.selected {
+  background-color: #4caf50;
+  color: white;
+}
+
 .profile-container {
   max-width: 400px;
   margin: 20px auto;
@@ -729,4 +757,8 @@ aside a:active {
 
 .toggle-auth:hover {
   text-decoration: underline;
+}
+.product-image {
+  width: 300px;  /* Установите нужную ширину */
+  height: auto;  /* Высота будет автоматически подстраиваться в зависимости от ширины */
 }

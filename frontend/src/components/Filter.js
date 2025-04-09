@@ -1,41 +1,43 @@
 import React, { useState } from "react";
-const getCookie = (name) => {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
-  return null;
-};
-const Filter = ({ obj }) => {
-  const { id, name, category, description, price, image, discount_price } = obj;
+
+const Filter = ({ obj, availableSeats = [], isInCart = false }) => {
+  const { id, title, genre, director, year, rating, description, price, image } = obj;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedStore, setSelectedStore] = useState("");
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedSeats, setSelectedSeats] = useState([]); // Массив выбранных мест
 
   const stores = [
-    { id: 1, name: "Магазин A", price: 320, deliveryTime: "30-40 мин" },
-    { id: 2, name: "Магазин B", price: 310, deliveryTime: "20-30 мин" },
-    { id: 3, name: "Магазин C", price: 300, deliveryTime: "40-50 мин" },
+    { id: 1, name: "Кинотеатр A", price: 320, deliveryTime: "30-40 мин" },
+    { id: 2, name: "Кинотеатр B", price: 310, deliveryTime: "20-30 мин" },
+    { id: 3, name: "Кинотеатр C", price: 300, deliveryTime: "40-50 мин" },
   ];
 
-  const addresses = [
-    "г. Москва, ул. Пушкина, д. 10",
-    "г. Москва, ул. Ленина, д. 5",
-    "г. Москва, ул. Тверская, д. 3",
-  ];
 
-  // Функция для отправки данных
+  const allSeats = Array.from({ length: 30 }, (_, i) => i + 1); // места от 1 до 30
+
+  // Функция для обработки клика на место
+  const toggleSeatSelection = (seat) => {
+    setSelectedSeats((prevSeats) => {
+      if (prevSeats.includes(seat)) {
+        // Если место уже выбрано, убираем его
+        return prevSeats.filter((selectedSeat) => selectedSeat !== seat);
+      } else {
+        // Если место не выбрано, добавляем его
+        return [...prevSeats, seat];
+      }
+    });
+  };
+
   const handleConfirmOrder = () => {
-    const customer_email = getCookie("userEmail");
     const orderData = {
       products: id,
       choosen_store: selectedStore,
-      address: selectedAddress,
-      customer_email,
-      status:"Ожидает обработки" // если есть скидка, отправляем скидочную цену
+      seats: selectedSeats,
+      customer_email: "example",
+      status: "Ожидает обработки",
     };
 
-    // Отправка данных на сервер
     fetch("http://127.0.0.1:8080/api/add-order/", {
       method: "POST",
       headers: {
@@ -43,47 +45,40 @@ const Filter = ({ obj }) => {
       },
       body: JSON.stringify(orderData),
     })
-      .then(response => response.json())
-      .then(data => {
+      .then((response) => response.json())
+      .then((data) => {
         console.log("Order confirmed:", data);
-        // Можно обработать ответ от сервера
-        setIsModalOpen(false); // Закрываем модальное окно после успешного подтверждения
+        setIsModalOpen(false);
+        setSelectedSeats([]); // Очистка выбранных мест после отправки
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error:", error);
-        // Можно показать ошибку пользователю, если необходимо
       });
   };
 
   return (
-    <div className="person">
-      <img src={image} alt={name} className="product-image" />
-      <h3>{name}</h3>
-      <p><strong>Категория:</strong> {category}</p>
+    <div className="movie-card">
+      <img src={image} alt={title} className="product-image" />
+      <h3>{title}</h3>
+      <p><strong>Жанр:</strong> {genre}</p>
+      <p><strong>Режиссёр:</strong> {director}</p>
+      <p><strong>Год:</strong> {year}</p>
+      <p><strong>Рейтинг:</strong> {rating}</p>
       <p><strong>Описание:</strong> {description}</p>
-
-      {discount_price ? (
-        <p>
-          <strong>Цена: </strong>
-          <span className="old-price">{price} Тг</span>
-          <span className="discount-price">{discount_price} Тг</span>
-        </p>
-      ) : (
-        <p><strong>Цена:</strong> {price} Тг</p>
-      )}
+      <p><strong>Цена:</strong> {price} Тг</p>
 
       <div className="buttons">
+        {/* Проверка на isInCart, если true, скрываем кнопку "В корзину" */}
+        {!isInCart && <button className="cart-button">В корзину</button>}
         <button className="buy-button" onClick={() => setIsModalOpen(true)}>Купить</button>
-        <button className="cart-button">В корзину</button>
       </div>
 
-      {/* Модальное окно подтверждения покупки */}
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
             <h3>Подтверждение покупки</h3>
 
-            <label>Выберите магазин:</label>
+            <label>Выберите кинотеатр:</label>
             <select onChange={(e) => setSelectedStore(e.target.value)}>
               <option value="">Выберите...</option>
               {stores.map((store) => (
@@ -93,18 +88,27 @@ const Filter = ({ obj }) => {
               ))}
             </select>
 
-            <label>Выберите адрес доставки:</label>
-            <select onChange={(e) => setSelectedAddress(e.target.value)}>
-              <option value="">Выберите...</option>
-              {addresses.map((address, index) => (
-                <option key={index} value={address}>{address}</option>
-              ))}
-            </select>
+            <label>Выберите места:</label>
+            <div className="seat-grid">
+              {allSeats.map((seat) => {
+                const isAvailable = availableSeats.includes(seat);
+                return (
+                  <button
+                    key={seat}
+                    className={`seat-button ${isAvailable ? '' : 'disabled'} ${selectedSeats.includes(seat) ? 'selected' : ''}`}
+                    onClick={() => isAvailable && toggleSeatSelection(seat)}
+                    disabled={!isAvailable}
+                  >
+                    {seat}
+                  </button>
+                );
+              })}
+            </div>
 
-            <button 
-              className="confirm-button" 
-              disabled={!selectedStore || !selectedAddress}
-              onClick={handleConfirmOrder} // Отправка данных при подтверждении заказа
+            <button
+              className="confirm-button"
+              disabled={!selectedStore  || selectedSeats.length === 0}
+              onClick={handleConfirmOrder}
             >
               Подтвердить заказ
             </button>

@@ -47,7 +47,7 @@ const ProfilePage = ({ toggleView }) => {
       <h3 className="order-history-title">История заказов</h3>
       <p>Заказов пока нет</p>
 
-      {/* Вызов toggleView без this.props */}
+  
       <button className="edit-button" onClick={() => toggleView("EditProfile")}>Редактировать</button>
       <button className="logout-button" onClick={handleLogout}>Выйти</button>
     </div>

@@ -17,7 +17,7 @@ class Header extends React.Component {
         <header className="header">
           <div className="header2">
             <div className="headerText" style={{ textAlign: "center", fontSize: "24px", fontWeight: "bold" }}>
-              Idelivery
+              AIR Bilets
             </div>
             <form onSubmit={this.handleSubmit}>
               <input id="enter" ref={this.filt} />

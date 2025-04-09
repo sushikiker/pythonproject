@@ -23,7 +23,7 @@ const EditProfile = () => {
     setFormData({
       name: getCookie("userName"),
       email: getCookie("userEmail"),
-      password: "", // Пароль оставляем пустым
+      password: "", 
       address: getCookie("userAddress"),
       age: getCookie("userAge"),
       paymentMethod: getCookie("userPaymentMethod"),

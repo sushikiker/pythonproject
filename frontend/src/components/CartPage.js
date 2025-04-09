@@ -1,13 +1,43 @@
 import React from "react";
+import Filter from './Filter'; // Импортируем компонент Filter
 
 class CartPage extends React.Component {
   render() {
     // Примерные товары
     const sampleItems = [
-      { id: 1, name: "Пицца Маргарита", price: 300, image: "https://avatars.mds.yandex.net/i?id=7ebe9bb2397c8145492a04f9527ef8f50e2f498a-4531164-images-thumbs&n=13" },
-      { id: 1, name: "Пицца Маргарита", price: 300, image: "https://avatars.mds.yandex.net/i?id=7ebe9bb2397c8145492a04f9527ef8f50e2f498a-4531164-images-thumbs&n=13" },
-      { id: 1, name: "Пицца Маргарита", price: 300, image: "https://avatars.mds.yandex.net/i?id=7ebe9bb2397c8145492a04f9527ef8f50e2f498a-4531164-images-thumbs&n=13" },
-     
+      {
+        id: 1,
+        title: "Inception",
+        genre: "Sci-Fi",
+        director: "Christopher Nolan",
+        year: 2010,
+        rating: 8.8,
+        description: "A skilled thief leads a team into people's dreams to steal secrets.",
+        price: 9.99,
+        image: "https://avatars.mds.yandex.net/i?id=acfefca6dc029042c65a8f26c884c3c5_l-5297681-images-thumbs&n=13"
+      },
+      {
+        id: 2,
+        title: "The Godfather",
+        genre: "Crime",
+        director: "Francis Ford Coppola",
+        year: 1972,
+        rating: 9.2,
+        description: "The aging patriarch of an organized crime dynasty transfers control to his reluctant son.",
+        price: 12.99,
+        image: "https://example.com/images/godfather.jpg"
+      },
+      {
+        id: 3,
+        title: "Interstellar",
+        genre: "Adventure",
+        director: "Christopher Nolan",
+        year: 2014,
+        rating: 8.6,
+        description: "A team of explorers travel through a wormhole in space in an attempt to save humanity.",
+        price: 10.99,
+        image: "https://example.com/images/interstellar.jpg"
+      }
     ];
 
     return (
@@ -15,15 +45,10 @@ class CartPage extends React.Component {
         <h2>Корзина</h2>
         
         <div className="sample-items">
-          <h3>Популярные товары</h3>
+          <h3>Товары в корзине</h3>
           <div className="items-grid">
             {sampleItems.map((item) => (
-              <div key={item.id} className="item-card">
-                <img src={item.image} alt={item.name} className="item-image" />
-                <h4>{item.name}</h4>
-                <p>{item.price} Т</p>
-                <button className="add-to-cart">Купить</button>
-              </div>
+              <Filter key={item.id} obj={item} availableSeats={[2, 5]} isInCart = {true}/> // Передаем товар в Filter
             ))}
           </div>
         </div>
@@ -33,4 +58,3 @@ class CartPage extends React.Component {
 }
 
 export default CartPage;
-
