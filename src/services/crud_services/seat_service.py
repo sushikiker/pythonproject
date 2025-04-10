@@ -30,7 +30,6 @@ class SeatService:
             await self.redis.set(pattern_seats, json.dumps(new_data), ex = 300)
 
 
-
     async def get_seat(self,id:int):
         pattern = f'seat:{id}'
         cached_seat = await self.redis.get(pattern)

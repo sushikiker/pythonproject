@@ -17,7 +17,7 @@ async def get_movie(movie_id: int, movie_service: MovieService = Depends(),
     return movie
 
 @router.get('/get_movies',status_code=200)
-async def get_movie(movie_service: MovieService = Depends(),
+async def get_movies(movie_service: MovieService = Depends(),
                     token: dict = Depends(jwt.verify_jwt_token)):
     movie = await movie_service.get_movies()
     return movie

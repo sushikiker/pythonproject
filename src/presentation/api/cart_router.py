@@ -15,6 +15,11 @@ async def get_cart(card_id: int, token: jwt_deps, service: CartService = Depends
     cart = await service.get_cart(id = card_id)
     return cart
 
+@router.get('/get_user_cart/{user_id}', status_code=200)
+async def get_cart(user_id: int, token: jwt_deps, service: CartService = Depends()):
+    cart = await service.get_carts_by_user_id(user_id=user_id)
+    return cart
+
 @router.post('/add_cart', status_code=201, response_model=CartResponse)
 async def add_cart(data: CartCreate, token: per_deps, service: CartService = Depends()):
     new_cart = await service.add_cart(data)
@@ -23,4 +28,9 @@ async def add_cart(data: CartCreate, token: per_deps, service: CartService = Dep
 @router.delete('/delete_cart/{cart_id}', status_code=201)
 async def delete_cart(cart_id:int, token: per_deps, service: CartService = Depends()):
     cart = await service.delete_cart(id=cart_id)
+    return cart
+
+@router.delete('/delete_user_cart/{user_id}', status_code=201)
+async def delete_user_cart(user_id:int, token: per_deps, service: CartService = Depends()):
+    cart = await service.delete_cart_by_user_id(user_id=user_id)
     return cart

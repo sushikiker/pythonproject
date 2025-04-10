@@ -10,6 +10,12 @@ class CartCRUD:
             request = select(CartModel).where(CartModel.id == id)
             result = await session.execute(request)
             return result.scalar_one_or_none()
+    
+    async def select_carts_by_user_id(self,user_id: int):
+        async with session_fabric() as session:
+            request = select(CartModel).where(CartModel.user_id == user_id)
+            result = await session.execute(request)
+            return result.scalars().all()
         
 
     async def add_cart(self,user_id: int, seance_id: int, seat_id: int):
@@ -33,3 +39,11 @@ class CartCRUD:
             await session.commit()
             return True
             
+    async def delete_cart_by_user_id(self,user_id:int):
+        async with session_fabric() as session:
+            request = delete(CartModel).where(CartModel.user_id==user_id)
+            result = await session.execute(request)
+            if result.rowcount == 0:
+                return False
+            await session.commit()
+            return True
