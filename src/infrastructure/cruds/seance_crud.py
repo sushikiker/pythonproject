@@ -26,9 +26,9 @@ class Seance_CRUD:
             result = await session.execute(query)
             return result.scalar_one_or_none()
             
-    async def select_seances(self):
+    async def select_seances_by_movie_id(self,movie_id):
         async with session_fabric() as session:
-            query = select(Seance)
+            query = select(Seance).where(Seance.movie_id==movie_id)
             result = await session.execute(query)
             return result.scalars().all()
     

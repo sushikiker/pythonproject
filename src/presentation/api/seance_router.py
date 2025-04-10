@@ -15,9 +15,9 @@ async def get_seance(seance_id: int, token: jwt_deps, service: SeanceService = D
     result = await service.get_seance(id=seance_id)
     return result
 
-@router.get('/get_seances', status_code=200)
-async def get_seances(token: jwt_deps, service: SeanceService = Depends()):
-    result = await service.get_seances()
+@router.get('/get_seances/{movie_id}', status_code=200)
+async def get_seances_by_movie(movie_id: int,token: jwt_deps, service: SeanceService = Depends()):
+    result = await service.get_seances_by_movie(movie_id)
     return result
 
 @router.post('/add_seance', status_code=201,response_model=SeanceResponse)
