@@ -45,6 +45,17 @@ class App extends React.Component {
       image: "https://example.com/images/interstellar.jpg"
     },
     {
+      id: 5,
+      title: "Беловежская пуща",
+      genre: "Adventure",
+      director: "Christopher Nolan",
+      year: 2014,
+      rating: 8.6,
+      description: "A team of explorers travel through a wormhole in space in an attempt to save humanity.",
+      price: 10.99,
+      image: "https://example.com/images/interstellar.jpg"
+    },
+    {
       id: 4,
       title: "Parasite",
       genre: "Thriller",
@@ -83,7 +94,7 @@ class App extends React.Component {
     switch (currentView) {
      
       case "bucet":
-        return <CartPage />;
+        return <CartPage toggleView={this.toggleView} products={products} />;
       case "EditProfile":
         return <EditProfile />;
       default:

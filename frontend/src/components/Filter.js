@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Filter = ({ obj, availableSeats = [], isInCart = false }) => {
+const Filter = ({ obj, availableSeats = [], isInCart = false ,onRemove}) => {
   const { id, title, genre, director, year, rating, description, price, image } = obj;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -15,7 +15,24 @@ const Filter = ({ obj, availableSeats = [], isInCart = false }) => {
 
 
   const allSeats = Array.from({ length: 30 }, (_, i) => i + 1); // места от 1 до 30
-
+  
+  
+  const handleAddToCart = (productId) => {
+    // Получаем текущие ID из cookie
+    const cookie = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('cart='));
+    const cart = cookie ? JSON.parse(decodeURIComponent(cookie.split('=')[1])) : [];
+  
+    // Проверяем, есть ли уже ID
+    if (!cart.includes(productId)) {
+      cart.push(productId);
+    }
+  
+    // Сохраняем обратно в cookie
+    document.cookie = `cart=${encodeURIComponent(JSON.stringify(cart))}; path=/; max-age=604800`; // 7 дней
+  };
+  
   // Функция для обработки клика на место
   const toggleSeatSelection = (seat) => {
     setSelectedSeats((prevSeats) => {
@@ -69,8 +86,14 @@ const Filter = ({ obj, availableSeats = [], isInCart = false }) => {
 
       <div className="buttons">
         {/* Проверка на isInCart, если true, скрываем кнопку "В корзину" */}
-        {!isInCart && <button className="cart-button">В корзину</button>}
+        {!isInCart && <button className="cart-button" onClick={() => handleAddToCart(id)}>В корзину</button>}
         <button className="buy-button" onClick={() => setIsModalOpen(true)}>Купить</button>
+        {isInCart && (
+  <button className="remove-button" onClick={() => onRemove(id)}>
+    Удалить из корзины
+  </button>
+)}
+
       </div>
 
       {isModalOpen && (

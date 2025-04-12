@@ -762,3 +762,36 @@ aside a:active {
   width: 300px;  /* Установите нужную ширину */
   height: auto;  /* Высота будет автоматически подстраиваться в зависимости от ширины */
 }
+.remove-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.remove-button:hover {
+  background-color: #ff1a1a;
+}
+.body1 {
+  padding: 20px;
+}
+
+
+.products-scroll-container {
+  display: flex;
+  flex-wrap: wrap; /* Элементы будут располагаться по строкам */
+  gap: 20px;
+  max-height: 80vh; /* Ограничиваем высоту контейнера */
+  overflow-y: auto; /* Добавляем прокрутку */
+}
+
+.product-wrapper {
+  flex: 0 0 calc(50% - 10px); /* Задаём ширину элемента (по 2 в строку) */
+  margin-bottom: 20px; /* Отступ снизу */
+  border: 1px solid #ccc;
+  padding: 10px;
+  background: #fff;
+  border-radius: 10px;
+}
