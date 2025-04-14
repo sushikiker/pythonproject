@@ -5,16 +5,16 @@
 }
 .seat-grid {
   display: grid;
-  grid-template-columns: repeat(10, 1fr); /* 10 столбцов */
-  gap: 5px; /* Уменьшаем отступы между кнопками */
-  justify-items: center; /* Центрируем кнопки в ячейках */
+  grid-template-columns: repeat(10, 1fr);
+  gap: 5px;
+  justify-items: center; /* не стоило сюда лезть */
 }
 
 
 .seat-button {
-  width: 20px; /* Уменьшаем ширину кнопки */
-  height: 30px; /* Уменьшаем высоту кнопки */
-  font-size: 12px; /* Меньший шрифт для текста */
+  width: 20px; 
+  height: 30px; 
+  font-size: 12px;
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -34,7 +34,7 @@
 .profile-container {
   max-width: 400px;
   margin: 20px auto;
-  padding: 20px;
+  padding: 20px;/* не стоило сюда лезть */
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -58,7 +58,7 @@
 
 .profile-container input,
 .profile-container select {
-  padding: 10px;
+  padding: 10px;/* не стоило сюда лезть */
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
@@ -83,7 +83,7 @@
   color: red;
   text-align: center;
   font-weight: bold;
-}
+}/* не стоило сюда лезть */
 
 .profile-container .success {
   color: green;
@@ -104,7 +104,7 @@ body {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 5px;/* не стоило сюда лезть */
   transition: background-color 0.3s ease;
   margin-top: 10px;
 }
@@ -113,14 +113,14 @@ body {
   background-color: #cc0000;
 }
 
-/* Основная структура */
+
 .main {
   display: flex;
   justify-content: space-between;
   padding: 20px;
 }
 
-/* Контентная область */
+
 .body1 {
   height: 100ch;
   width: 90vw;
@@ -128,7 +128,7 @@ body {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
+}/* не стоило сюда лезть */
 
 /* Шапка */
 .header {
@@ -150,7 +150,7 @@ body {
   border-radius: 10px;
 }
 
-/* Заголовок в шапке */
+
 .headerText {
   font-size: 24px;
   font-weight: bold;
@@ -159,7 +159,6 @@ body {
   flex-grow: 1;
 }
 
-/* Поле ввода и кнопка */
 .header input {
   width: 300px;
   padding: 5px;
@@ -168,7 +167,7 @@ body {
   height: 30px;
   font-size: 16px;
 }
-
+/* не стоило сюда лезть */
 .header button {
   background: #6c757d;
   color: white;
@@ -187,7 +186,7 @@ body {
 
 /* Подвал */
 footer {
-  display: flex;
+  display: flex;/* не стоило сюда лезть */
   align-items: center;
   justify-content: space-between;
   padding: 15px;
@@ -196,24 +195,24 @@ footer {
   box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Лицензия */
+
 .lisens {
   font-size: 14px;
   color: #6c757d;
 }
 
-/* Секция с информацией */
+
 .person {
   border: 3px solid #adb5bd;
   background: white;
   padding: 15px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 15px;
+  margin-top: 15px;/* не стоило сюда лезть */
   width: 50vw;
 }
 
-/* Боковая панель */
+
 aside {
   height: 100ch;
   width: 13vw;
@@ -223,14 +222,14 @@ aside {
   box-shadow: 4px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Текст в боковой панели */
+
 aside p {
   margin-top: 5px;
   font-size: 16px;
   color: #495057;
-}
+}/* не стоило сюда лезть */
 
-/* Текст в блоке "person" */
+
 .person p {
   margin-left: 5px;
   font-size: 16px;
@@ -248,7 +247,7 @@ aside p {
   margin: 15px;
   display: inline-block;
   transition: transform 0.3s ease-in-out;
-}
+}/* не стоило сюда лезть */
 
 .person:hover {
   transform: translateY(-5px);
@@ -263,8 +262,8 @@ aside p {
 
 .buttons {
   display: flex;
-  justify-content: flex-end; /* Перемещает кнопки вправо */
-  gap: 10px; /* Добавляет расстояние между кнопками */
+  justify-content: flex-end;
+  gap: 10px; 
   margin-top: 15px;
 }
 
@@ -310,7 +309,7 @@ aside p {
   font-weight: bold;
 }
 
-/* Общие стили для всех страниц */
+
 .page-container {
   padding: 20px;
   max-width: 1200px;
@@ -318,7 +317,6 @@ aside p {
   font-family: Arial, sans-serif;
 }
 
-/* Стили для заголовков страниц */
 .page-title {
   text-align: center;
   font-size: 28px;
@@ -327,7 +325,7 @@ aside p {
   color: #333;
 }
 
-/* Стили для блока со скидками */
+
 .discount-container {
   display: flex;
   flex-wrap: wrap;
@@ -362,7 +360,7 @@ aside p {
   margin-left: 10px;
 }
 
-/* Кнопки "Купить" и "В корзину" */
+
 .buttons {
   display: flex;
   justify-content: space-between;
@@ -396,7 +394,7 @@ aside p {
   background: #cc8800;
 }
 
-/* Стили для страницы корзины */
+
 .cart-container {
   padding: 20px;
   background: #f5f5f5;
@@ -444,7 +442,7 @@ aside p {
   background: #a00000;
 }
 
-/* Стили для страницы профиля */
+
 .profile-container {
   background: white;
   padding: 20px;
@@ -759,8 +757,8 @@ aside a:active {
   text-decoration: underline;
 }
 .product-image {
-  width: 300px;  /* Установите нужную ширину */
-  height: auto;  /* Высота будет автоматически подстраиваться в зависимости от ширины */
+  width: 300px;  
+  height: auto;  
 }
 .remove-button {
   background-color: #ff4d4d;
@@ -781,15 +779,15 @@ aside a:active {
 
 .products-scroll-container {
   display: flex;
-  flex-wrap: wrap; /* Элементы будут располагаться по строкам */
+  flex-wrap: wrap; 
   gap: 20px;
-  max-height: 80vh; /* Ограничиваем высоту контейнера */
-  overflow-y: auto; /* Добавляем прокрутку */
+  max-height: 70vh; 
+  overflow-y: auto; 
 }
 
 .product-wrapper {
-  flex: 0 0 calc(50% - 10px); /* Задаём ширину элемента (по 2 в строку) */
-  margin-bottom: 20px; /* Отступ снизу */
+  flex: 0 0 calc(50% - 10px); 
+  margin-bottom: 20px; 
   border: 1px solid #ccc;
   padding: 10px;
   background: #fff;

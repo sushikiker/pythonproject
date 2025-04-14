@@ -15,7 +15,7 @@ class CartPage extends React.Component {
     };
   }
 
-  // Стрелочная версия — нормально, если использовать поля класса (modern JS)
+  
   getCartFromCookies = () => {
     const cookie = document.cookie
       .split('; ')

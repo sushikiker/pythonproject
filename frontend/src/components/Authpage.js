@@ -3,12 +3,8 @@ import React, { useState } from "react";
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
-    name: "",
     email: "",
     password: "",
-    address: "",
-    age: "",
-    paymentMethod: "paypal", // Способ оплаты по умолчанию
   });
 
   const [loading, setLoading] = useState(false);
@@ -36,17 +32,26 @@ const AuthPage = () => {
     setLoading(true);
     setError(null);
   
-    console.log("Отправляемые данные:", formData);
-  
     const url = isLogin
-      ? "http://127.0.0.1:8080/api/login/"
-      : "http://127.0.0.1:8080/api/register/";
+      ? "http://127.0.0.1:8000/users/login/"
+      : "http://127.0.0.1:8000/users/registration/";
+  
+    const payload = isLogin
+      ? {
+          email: formData.email,
+          password: formData.password,
+        }
+      : {
+          email: formData.email,
+          password: formData.password,
+          role: "user", // Константная роль
+        };
   
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
   
       let data;
@@ -59,35 +64,46 @@ const AuthPage = () => {
       if (response.ok) {
         console.log("Ответ сервера:", data);
   
-        if (isLogin) {
-          if ( !data.user) {
-            throw new Error("Отсутствует информация о пользователе");
-          }
-          
-          
-          setCookie("userEmail", data.user.email, 7);
-          setCookie("userName", data.user.name, 7);
-          setCookie("userAddress", data.user.address, 7);
-          setCookie("userAge", data.user.age, 7);
-          setCookie("userPaymentMethod", data.user.paymentMethod, 7);
+        // Сохраняем access_token и refresh_token в cookies
+        setCookie("accessToken", data.access_token, 7);
+        setCookie("refreshToken", data.refresh_token, 7);
   
-          alert(`Вход успешен! Добро пожаловать, ${data.user.name}`);
+        if (isLogin) {
+          // Делаем запрос на /users/profile
+          const profileResponse = await fetch("http://127.0.0.1:8000/users/profile/", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${data.access_token}`,
+            },
+          });
+  
+          if (profileResponse.ok) {
+            const profileData = await profileResponse.json();
+            
+  
+            const userName = profileData.email ? profileData.email: "пользователь";
+            alert(`Вход успешен! Добро пожаловать, ${userName}`);
+          } else {
+            throw new Error("Не удалось получить данные профиля");
+          }
+  
           window.location.reload();
         } else {
-          // Регистрация: сервер просто отправляет `message` и `id`
           alert(data.message || "Регистрация успешна!");
-          setCookie("userEmail", formData.email, 7);
-          setCookie("userName", formData.name, 7);
-          setCookie("userAddress",formData.address, 7);
-          setCookie("userAge", formData.age, 7);
-          setCookie("userPaymentMethod", formData.paymentMethod, 7);
+          setCookie("jwtToken", formData.email, 7); 
+  
           setIsLogin(true);
-          setFormData({ name: "", email: "", password: "", address: "", age: "", paymentMethod: "paypal" });
+          setFormData({
+            email: "",
+            password: "",
+          });
+  
           window.location.reload();
         }
       } else {
-        setError(data.email || "Ошибка при выполнении запроса");
-        console.log(data)
+        setError(data.detail || data.email || "Ошибка при выполнении запроса");
+        console.log(data);
       }
     } catch (error) {
       setError(error.message || "Ошибка соединения с сервером");
@@ -102,38 +118,12 @@ const AuthPage = () => {
       <h2>{isLogin ? "Вход" : "Регистрация"}</h2>
       {error && <p className="error">{error}</p>}
       <form onSubmit={handleSubmit}>
-        {!isLogin && (
-          <>
-            <label>Имя:</label>
-            <input 
-            type="text" 
-            name="name" 
-            value={formData.name}
-             onChange={handleChange}
-              required 
-              />
-
-            <label>Адрес доставки:</label>
-            <input type="text" name="address" value={formData.address} onChange={handleChange} required />
-
-            <label>Возраст:</label>
-            <input type="number" name="age" value={formData.age} onChange={handleChange} required min="1" />
-
-            <label>Способ оплаты:</label>
-            <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange} required>
-              <option value="credit_card">Кредитная карта</option>
-              <option value="paypal">PayPal</option>
-              <option value="bank_transfer">Банковский перевод</option>
-            </select>
-          </>
-        )}
-
         <label>Email:</label>
         <input type="email" name="email" value={formData.email} onChange={handleChange} required />
 
         <label>Пароль:</label>
         <input type="password" name="password" value={formData.password} onChange={handleChange} required />
-        
+
         <button type="submit" disabled={loading}>
           {loading ? "Загрузка..." : isLogin ? "Войти" : "Зарегистрироваться"}
         </button>

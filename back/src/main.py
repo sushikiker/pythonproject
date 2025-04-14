@@ -1,6 +1,25 @@
-from fastapi import FastAPI
+
 from src.presentation.api import auth_router, movie_router, seat_router, hall_router, seance_router, cart_router
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+# Разрешённые источники (указываем порт фронта)
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Разрешаем нужные источники
+    allow_credentials=True,
+    allow_methods=["*"],  # Можно указать только нужные методы: ["GET", "POST"]
+    allow_headers=["*"],
+)
+
+
 
 app.include_router(auth_router.router, prefix= '/users', tags=['Users'])
 
