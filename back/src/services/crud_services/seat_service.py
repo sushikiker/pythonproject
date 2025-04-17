@@ -29,6 +29,23 @@ class SeatService:
                 new_data.append(result.model_dump())
             await self.redis.set(pattern_seats, json.dumps(new_data), ex = 300)
 
+    async def _add_cached_seats_all(self, result: SeatResponse):
+        pattern_seats = f'seats_list_all:{result.hall_id}'
+
+        cached_seats = await self.redis.get(pattern_seats)
+        if cached_seats:
+            data = json.loads(cached_seats)
+            data.append(result.model_dump())
+            await self.redis.set(pattern_seats, json.dumps(data), ex = 300)
+
+    async def _update_cached_seats_all(self, result: SeatResponse):
+        pattern_seats = f'seats_list_all:{result.hall_id}'
+        cached_seats = await self.redis.get(pattern_seats)
+        if cached_seats:
+            data = json.loads(cached_seats)
+            new_data = [m for m in data if m.get('id') != result.id]
+            new_data.append(result.model_dump())  # Всегда добавляем, независимо от status
+            await self.redis.set(pattern_seats, json.dumps(new_data), ex = 300)
 
     async def get_seat(self,id:int):
         pattern = f'seat:{id}'
@@ -68,6 +85,27 @@ class SeatService:
 
         return result
     
+    async def get_seats_by_hall_id(self,hall_id):
+        pattern = f'seats_list_all:{hall_id}'
+        cached_seats = await self.redis.get(pattern)
+        if cached_seats:
+            data = json.loads(cached_seats)
+            return [SeatResponse.model_validate(seat) for seat in data]
+
+        seats = await self.model.select_seats(hall_id=hall_id)
+        if not seats:
+            raise HTTPException(status_code=404, detail='Seats not found')
+        if seats == 'hall':
+            raise HTTPException(status_code=400, detail='Invalid hall_id')
+        
+        result = [SeatResponse.model_validate(seat) for seat in seats]
+        
+        data = [seat.model_dump() for seat in result]
+
+        await self.redis.set(pattern, json.dumps(data), ex = 300)
+
+        return result
+    
     async def delete_seat(self,id: int):
         pattern_id = f'seat:{id}'
 
@@ -89,6 +127,13 @@ class SeatService:
 
             await self.redis.set(pattern_hall, json.dumps(new_seats), ex = 300)
 
+        pattern_all = f'seats_list_all:{seat.hall_id}'
+        data_all = await self.redis.get(pattern_all)
+        if data_all:
+            cached_data_all = json.loads(data_all)
+            new_seats_all = [s for s in cached_data_all if s.get('id') != id]
+            await self.redis.set(pattern_all, json.dumps(new_seats_all), ex = 300)
+
         return {'message':'Seat deleted successfully'}
     
     async def add_seat(self, seat: SeatCreate):
@@ -104,6 +149,7 @@ class SeatService:
 
         await self.redis.set(pattern,cached_seat,ex = 300)
         await self._add_cached_seats(result)
+        await self._add_cached_seats_all(result)  
 
         return result
     
@@ -123,6 +169,8 @@ class SeatService:
 
         await self.redis.set(pattern,json_seat, ex = 300)
         await self._update_cached_seats(result)
+        await self._update_cached_seats_all(result)  
+
 
         return result
 

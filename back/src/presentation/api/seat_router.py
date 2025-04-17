@@ -22,6 +22,11 @@ async def get_free_seats(hall_id: int, service: SeatService = Depends(), token: 
     seats = await service.get_free_seats_by_hall_id(hall_id)
     return seats
 
+@router.get('/get_seats/{hall_id}', status_code=200)
+async def get_seat(hall_id:int, token: dict = Depends(jwt.verify_jwt_token),
+                    service: SeatService = Depends()):
+    seats = await service.get_seats_by_hall_id(hall_id)
+    return seats
 
 @router.post('/add_seat', response_model= SeatResponse,status_code=201)
 async def add_seat(seat: SeatCreate, token: dict = Depends(Permissions.check_permissions),

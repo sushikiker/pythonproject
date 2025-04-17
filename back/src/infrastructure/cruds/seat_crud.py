@@ -23,6 +23,16 @@ class SeatCRUD:
             await session.rollback()
             return 'hall'
     
+    async def select_seats(self,hall_id):
+        try:
+            async with session_fabric() as session:
+                query = select(Seat).where(Seat.hall_id==hall_id)
+                result = await session.execute(query)
+                return result.scalars().all()
+        except IntegrityError:
+            await session.rollback()
+            return 'hall'
+    
     async def delete_seat(self,id:int):
         async with session_fabric() as session:
             query = delete(Seat).where(Seat.id == id)
