@@ -1,0 +1,114 @@
+/* src/components/Auth/auth.css */
+.auth-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.auth-box {
+  background: #fff;
+  padding: 24px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  width: 320px;
+  text-align: center;
+}
+
+.auth-box > button {
+  margin: 0 8px 16px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.auth-box > button:hover {
+  background: #0056b3;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-form h3 {
+  margin: 0;
+  color: #333;
+}
+
+.auth-form input {
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-form-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.auth-form-buttons button {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-form-buttons button[type="submit"] {
+  background: #28a745;
+  color: #fff;
+}
+
+.auth-form-buttons button[type="button"] {
+  background: #dc3545;
+  color: #fff;
+}
+
+.auth-form-buttons button:hover {
+  opacity: 0.9;
+}
+
+.error-message {
+  color: red;
+  font-size: 13px;
+}
+
+.auth-logged {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+}
+
+.logout-btn {
+  padding: 8px 16px;
+  background-color: #e74c3c;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #c0392b;
+  transform: translateY(-1px);
+}
+
+.logout-btn:active {
+  background-color: #a93226;
+  transform: translateY(0);
+}

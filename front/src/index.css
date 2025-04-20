@@ -1,0 +1,68 @@
+/* Сброс стилей */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Основной стиль body */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Шапка страницы */
+.header {
+  display: flex;
+  justify-content: center; /* Центрируем содержимое */
+  align-items: center; /* Выравниваем элементы по вертикали */
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  border-bottom: 1px solid #ddd;
+  position: relative; /* Для абсолютного позиционирования логина */
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.auth-container {
+  position: absolute; /* Абсолютное позиционирование */
+  right: 20px; /* Отступ от правого края */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Основная область (растягивается) */
+.main {
+  display: flex;
+  flex: 1; /* Заставляет main растягиваться */
+}
+
+.main-content {
+  flex: 1; /* Заставляет main-content занимать оставшееся пространство */
+  padding: 20px;
+}
+
+/* Футер всегда снизу */
+.footer {
+  padding: 15px;
+  background: #fff;
+  border-top: 3px solid #adb5bd;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}

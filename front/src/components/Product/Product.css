@@ -1,0 +1,114 @@
+.movie-card {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px;
+  background: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 450px; /* Фиксированная высота карточки */
+  width: 250px; /* Фиксированная ширина карточки */
+  overflow: hidden; /* Убираем выход элементов за пределы карточки */
+}
+
+.movie-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.movie-card img {
+  width: 100%;
+  height: 150px; /* Фиксированная высота изображения */
+  object-fit: cover; /* Обрезка изображения, чтобы оно вписывалось в заданные размеры */
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.movie-card h3 {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #333;
+  text-align: center;
+  height: 40px; /* Фиксированная высота заголовка */
+  overflow: hidden; /* Обрезка текста, если он слишком длинный */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.movie-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #555;
+  line-height: 1.4;
+  height: 40px; /* Фиксированная высота для описания */
+  overflow: hidden; /* Обрезка текста, если он слишком длинный */
+  text-overflow: ellipsis;
+}
+
+.description-container {
+  flex: 1; /* Занимает оставшееся пространство */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.description {
+  overflow-y: auto; /* Прокрутка для длинного текста */
+  text-overflow: ellipsis;
+  height: 60px; /* Ограничиваем высоту описания */
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Прижимаем кнопки к нижней части карточки */
+  gap: 10px;
+}
+
+.cart-button,
+.buy-button,
+.remove-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+  width: 100%; /* Фиксированная ширина кнопок */
+  text-align: center;
+}
+
+.cart-button {
+  background: #007bff;
+  color: white;
+}
+
+.cart-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.buy-button {
+  background: #28a745;
+  color: white;
+}
+
+.buy-button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+.remove-button {
+  background: #dc3545;
+  color: white;
+}
+
+.remove-button:hover {
+  background: #c82333;
+  transform: scale(1.05);
+}

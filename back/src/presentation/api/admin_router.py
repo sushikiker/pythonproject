@@ -1,0 +1,1 @@
+from src.infrastructure.cruds import seance_crud, seat_crud, movie_crud 

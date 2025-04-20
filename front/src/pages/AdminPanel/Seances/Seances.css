@@ -1,0 +1,74 @@
+/* src/components/Seances/Seances.css */
+.seances-section {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 16px;
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  .seances-section h2 {
+    text-align: center;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  .error-msg {
+    color: #c00;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .movie-select {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .movie-select select {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .seances-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 16px;
+  }
+  .seances-table th,
+  .seances-table td {
+    padding: 8px;
+    border: 1px solid #eee;
+    text-align: center;
+  }
+  .seances-table th {
+    background: #f9f9f9;
+  }
+  
+  .seance-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+  }
+  .seance-form select,
+  .seance-form input {
+    padding: 6px 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .seance-form button {
+    padding: 6px 12px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+  }
+  .seance-form button:hover {
+    border-color: #888;
+  }
+  
+  @media (max-width: 600px) {
+    .seance-form { flex-direction: column; }
+    .seances-table th,
+    .seances-table td { font-size: 12px; padding: 6px; }
+  }
+  
